@@ -1,0 +1,14 @@
+.env
+.dictate.pid
+config.local.toml
+dictate.log.*
+.venv/
+__pycache__/
+*.pyc
+dictate.log
+debug.log
+recordings/
+dictation-log.md
+.DS_Store
+Dictate.app/
+dictate-launch.log

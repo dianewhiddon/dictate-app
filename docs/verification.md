@@ -1,0 +1,58 @@
+# Release verification
+
+## 0.1.4 · November 3, 2026
+
+57 Windows tests including all five controlled desktop checks passed. Unicode insertion into a disposable editor, recovery and clipboard sequence preservation were exercised. Real voice hold-to-talk was deferred by the maintainer. macOS source and attribution are unchanged; hosted checks verify software separately.
+
+Runtime dependency advisory checks found no known vulnerabilities. Public runtime dependencies are unchanged.
+
+The source archive, fresh installation, exact-commit hosted checks and anonymous download checksum are verified before publication is closed out. Real reboot/sign-in and untested hardware are not certified by these fixtures.
+
+## 0.1.3 · November 3, 2026
+
+Battery release. The Windows hold-key watcher waits for Windows Raw Input messages instead of polling every 20 milliseconds, and the window's action queue wakes when work is posted. Dictation, insertion, Recents, dependencies and the macOS port are unchanged.
+
+55 default tests, Ruff lint and Ruff formatting passed on Windows 11 x64 with Python 3.12. New tests cover the Raw Input watcher registering a hidden message-only window, staying quiet until a key message arrives and stopping, and the watcher loop: it sleeps while idle, looks every 20 milliseconds while the keys are held, and polls again when Raw Input is unavailable. The macOS tests were not run for this release because the macOS source is unchanged and no Mac was available.
+
+Idle use was measured on one laptop (Intel Core i7-11370H) with the personal edition of the same change: about 0.73% of one core before and about 0.08% after, over 15 to 20 seconds. The owner's real hold-to-talk was not repeated on this edition's installation for this release.
+
+## 0.1.2 · October 23, 2026
+
+Dependency security update: certifi 2026.10.19 in all three locks, Pillow 13.0.0 in the Windows lock and uv 0.13.4 in the development lock. Application code is unchanged.
+
+A fresh hash-locked Windows installation passed `pip check`, Ruff lint and formatting, and the 45 default tests on Windows 11 x64 with Python 3.12, with no Pillow deprecation warnings. The Windows and macOS locks both passed advisory audits. The five opt-in desktop integration checks were not rerun for this dependency-only release; they last passed for 0.1.1. Hosted checks cover the macOS port.
+
+Release assets are built from the exact commit, with hosted checks, exported-tree/history secret scans and an unauthenticated SHA-256 download check recorded in the versioned release notes.
+
+## 0.1.1 · October 16, 2026
+
+45 default Windows tests and all five controlled desktop integration checks passed. Both platform dependency locks passed advisory audits. The macOS source and Diane Green attribution are unchanged; hosted checks cover that port separately.
+
+The implemented gold theme was compared with the approved native previews at normal and constrained sizes, including populated, empty, hover, focus and error states where applicable. Actions are gold with white labels; links and dark-surface focus are light gold; surfaces and selections are neutral gray. White on gold is an approved visual exception, not a claim of AA small-text contrast. Full screen-reader, high-contrast and mixed-DPI support remain unverified.
+
+Release assets are built from the exact commit, with hosted checks, exported-tree/history secret scans and an unauthenticated SHA-256 download check recorded in the versioned release notes. Existing personal installations are not modified.
+
+## Previous release evidence
+
+
+Dictate 0.1.0, October 15, 2026. Windows x64 / Python 3.12 is the primary tested desktop target. macOS keeps its separate contributed implementation.
+
+## Windows evidence
+
+The local release checks include 50 tests with all controlled Windows integration tests enabled, zero skips. They exercise real Unicode insertion into an owned test editor, clipboard sequence preservation, deliberate popup copying, durable recovery before insertion, microphone failure/retry, bounded capture, incomplete-audio recovery, menu/focus guards, provider failure handling, configuration validation, and actual Anthropic SDK behavior through a mock HTTP transport.
+
+The runtime was installed into a fresh virtual environment using the complete hashed lock. Development tools have their own universal hashed lock. Native popup captures cover populated, empty and ten-entry states with fictional text. Tests verify scrolling in a simulated 1024 × 768 work area at 150% scaling and real absolute window placement at negative desktop coordinates. A separate Impeccable finish review found no remaining material issues in that popup scope.
+
+Local acceptance also opened the real microphone, captured one second of audio and closed it without saving or uploading the recording; created and closed the real tray with global hotkeys disabled; and verified shortcut creation, removal and refusal to overwrite a foreign shortcut in an isolated folder. Runtime dependency audits found no known advisories on October 15, 2026.
+
+## macOS scope
+
+All 13 macOS regressions passed on an Apple Silicon GitHub runner, including actual disposable-process inspection and shutdown while an unrelated process remained alive. The locked installer, package consistency, dependency audit, shell syntax and generated app-bundle metadata also passed. The tests use a dummy keyboard backend and mocked provider/clipboard operations. These checks do not constitute a real user's microphone, permissions, clipboard, or app-bundle acceptance.
+
+Release assets come from the exact tested commit, with a separate SHA-256 file and an unauthenticated download check.
+
+## Boundaries
+
+Cloud calls in the automated suite are mocked; no provider availability or billing guarantee follows. Windows input checks use a controlled Tk editor, not every desktop application. Foreground-window guards cannot detect a different field inside the same window or make insertion atomic. macOS has a separate clipboard path without that destination guard.
+
+No second-PC, broad hardware, screen-reader, multi-monitor or high-DPI certification. The custom Windows canvas popup does not expose native list semantics to screen readers. The distribution is source plus setup scripts, not a signed executable. AI cleanup is opt-in and remains probabilistic. Dependencies are checked for known advisories, not certified free of security defects.
